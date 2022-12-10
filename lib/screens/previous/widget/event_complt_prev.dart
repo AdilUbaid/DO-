@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project/db/funtion/eventDbFunctions.dart';
+import 'package:project/db/model/eventDataModel.dart';
 
-import '../../../db/funtion/taskDbFunctions.dart';
-import '../../../db/model/dataModel.dart';
 import '../../../function/themeColor.dart';
-import '../../HomeScreen/widget/taskTab.dart';
-import '../../taskView/TaskView.dart';
+import '../../HomeScreen/widget/eventTab.dart';
 import 'complete_view.dart';
 
-List<TaskModel> donePrevious = [];
-List<TaskModel> pendingPrevious = [];
+List<EventModel> eventDonePrevious = [];
+
 
 class CmpltPrevious extends StatefulWidget {
   const CmpltPrevious({super.key});
@@ -20,24 +19,24 @@ class CmpltPrevious extends StatefulWidget {
 class _CmpltPreviousState extends State<CmpltPrevious> {
   @override
   Widget build(BuildContext context) {
-    donePrevious =
-        pastTaskArray.where((element) => element.isAlarm == true).toList();
+    eventDonePrevious =
+        pastEventArray.where((element) => element.isAlarm == true).toList();
     return ListView(children: [
       ValueListenableBuilder(
-          valueListenable: taskListNotifier,
+          valueListenable: eventListNotifier,
           builder: (
             BuildContext ctx,
-            List<TaskModel> taskList,
+            List<EventModel> eventList,
             Widget? child,
           ) {
             return ListView.builder(
-                itemCount: donePrevious.length,
+                itemCount: eventDonePrevious.length,
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   // print("$index index");
-                  final data = donePrevious[index];
+                  final data = eventDonePrevious[index];
                   print('$index\n');
 
                   return

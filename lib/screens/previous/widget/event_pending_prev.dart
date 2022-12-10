@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project/db/funtion/eventDbFunctions.dart';
+import 'package:project/db/model/eventDataModel.dart';
 import 'package:project/screens/previous/widget/CmpltPrevious.dart';
 import 'package:project/screens/previous/widget/pending_view.dart';
 
-import '../../../db/funtion/taskDbFunctions.dart';
-import '../../../db/model/dataModel.dart';
 import '../../../function/themeColor.dart';
-import 'package:project/screens/HomeScreen/widget/taskTab.dart';
 
+List<EventModel> eventPendingPrevious = [];
 class PendingPrevious extends StatefulWidget {
   const PendingPrevious({super.key});
 
@@ -15,16 +15,18 @@ class PendingPrevious extends StatefulWidget {
 }
 
 class _PendingPreviousState extends State<PendingPrevious> {
+  get pastEventArray => null;
+
   @override
   Widget build(BuildContext context) {
-    pendingPrevious =
-        pastTaskArray.where((element) => element.isAlarm == false).toList();
+    eventPendingPrevious =
+        pastEventArray.where((element) => element.isAlarm == false).toList();
     return ListView(children: [
       ValueListenableBuilder(
-          valueListenable: taskListNotifier,
+          valueListenable: eventListNotifier,
           builder: (
             BuildContext ctx,
-            List<TaskModel> taskList,
+            List<EventModel> eventList,
             Widget? child,
           ) {
             return ListView.builder(

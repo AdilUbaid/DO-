@@ -50,6 +50,7 @@ dependencies:
   # flutter_local_notifications: ^12.0.4
   audioplayers: ^1.1.1
   table_calendar: ^3.0.8
+  flutter_markdown: ^0.6.13
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,9 @@ flutter:
     - assets/
     - assets/image/wood-blog-placeholder.jpg
     - assets/image/lt03978815_quantized.png
+    - assets/image/icon.jpg
+    # - assets/document/privacy_policy.md
+    - assets/document/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
