@@ -5,7 +5,7 @@ import 'addTaskEvent.dart';
 import '../../../function/themeColor.dart';
 
 class BottomNav extends StatelessWidget {
-  BottomNav({super.key, this.homeIndex = 0});
+  BottomNav({super.key, required this.homeIndex });
 
   var homeIndex;
 
@@ -26,7 +26,7 @@ class BottomNav extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4, bottom: 4, left: 38),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PreviousScreen())),
+                      builder: (context) => PreviousScreen(homeIndex: homeIndex,))),
                   child: Column(
                     children: [
                       Icon(
@@ -81,7 +81,7 @@ class BottomNav extends StatelessWidget {
             onPressed: () {
               showModalBottomSheet(
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
@@ -94,6 +94,10 @@ class BottomNav extends StatelessWidget {
               );
             },
             child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: accentYellow, width: 4),
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(11.0),
                 child: Icon(
@@ -101,10 +105,6 @@ class BottomNav extends StatelessWidget {
                   size: 27,
                   color: accentYellow,
                 ),
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: accentYellow, width: 4),
-                borderRadius: BorderRadius.circular(30),
               ),
             ),
           ),

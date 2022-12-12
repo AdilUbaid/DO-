@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:project/db/funtion/eventDbFunctions.dart';
 import 'package:project/db/model/eventDataModel.dart';
-import 'package:project/screens/previous/widget/CmpltPrevious.dart';
+// import 'package:project/screens/previous/widget/CmpltPrevious.dart';
 import 'package:project/screens/previous/widget/pending_view.dart';
 
 import '../../../function/themeColor.dart';
+import '../../HomeScreen/widget/eventTab.dart';
 
 List<EventModel> eventPendingPrevious = [];
-class PendingPrevious extends StatefulWidget {
-  const PendingPrevious({super.key});
+
+class EvntPendingPrevious extends StatefulWidget {
+  var homeIndex;
+
+   EvntPendingPrevious({super.key,required this.homeIndex});
 
   @override
-  State<PendingPrevious> createState() => _PendingPreviousState();
+  State<EvntPendingPrevious> createState() => _EvntPendingPreviousState();
 }
 
-class _PendingPreviousState extends State<PendingPrevious> {
-  get pastEventArray => null;
+class _EvntPendingPreviousState extends State<EvntPendingPrevious> {
+  // get pastEventArray => null;
 
   @override
   Widget build(BuildContext context) {
+    print("length ${pastEventArray.length}");
     eventPendingPrevious =
         pastEventArray.where((element) => element.isAlarm == false).toList();
     return ListView(children: [
@@ -30,12 +35,12 @@ class _PendingPreviousState extends State<PendingPrevious> {
             Widget? child,
           ) {
             return ListView.builder(
-                itemCount: pendingPrevious.length,
+                itemCount: eventPendingPrevious.length,
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
-                  final data = pendingPrevious[index];
+                  final data = eventPendingPrevious[index];
                   print('$index\n');
 
                   return Padding(
@@ -50,8 +55,9 @@ class _PendingPreviousState extends State<PendingPrevious> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(17),
                           color: cGreen),
-                      child: PendingView(
+                      child: PendingView(homeIndex: widget.homeIndex,
                         data: data,
+                        mode: 'EE',
                       ),
                     ),
                   );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project/db/funtion/taskDbFunctions.dart';
-import 'package:project/main.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../function/themeColor.dart';
 
@@ -10,13 +9,9 @@ import '../../HomeScreen/widget/addTaskEvent.dart';
 
 class BottomBtnTskEvnt extends StatelessWidget {
   var homeIndex;
-
   var mode;
-
   var index;
-
   var id;
-
   var data;
 
   BottomBtnTskEvnt(
@@ -38,7 +33,7 @@ class BottomBtnTskEvnt extends StatelessWidget {
             onPressed: () {
               showModalBottomSheet(
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),

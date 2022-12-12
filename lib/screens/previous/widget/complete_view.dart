@@ -7,8 +7,10 @@ import '../../HomeScreen/widget/addTaskEvent.dart';
 
 class CompleteView extends StatelessWidget {
   var data;
+  
+  String mode;
 
-  CompleteView({super.key, required this.data});
+  CompleteView({super.key, required this.data,this.mode="ET"});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class CompleteView extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AddTaskEvent(
-                            mode: 'ET',
+                            mode: mode,
                             homeIndex: 0,
                             data: data,
                           );

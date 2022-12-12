@@ -6,37 +6,6 @@ import 'calenderEvent.dart';
 import '../../../function/themeColor.dart';
 import 'calenderTask.dart';
 
-class Task {
-  String date;
-  String day;
-  String task;
-  String description;
-
-  Task(
-      {required this.date,
-      required this.day,
-      required this.task,
-      required this.description});
-}
-
-List<Task> tasks = [
-  Task(
-      date: '20',
-      day: 'Today',
-      task: 'paytax',
-      description: 'go kollam and pay tax'),
-  Task(
-      date: '20',
-      day: 'Today',
-      task: 'paytax',
-      description: 'go kollam and pay tax'),
-  Task(
-      date: '20',
-      day: 'Today',
-      task: 'paytax',
-      description: 'go kollam and pay tax'),
-];
-
 class CalendarEveTask extends StatefulWidget {
   const CalendarEveTask({super.key});
 
@@ -68,7 +37,10 @@ class _CalendarEveTaskState extends State<CalendarEveTask> {
           child: Container(
               padding: const EdgeInsets.all(17),
               child: Column(
-                children: [CalenderTask(), CalenderEvent()],
+                // ignore: prefer_const_constructors
+                children: const [CalenderTask(), 
+                // CalenderEvent()
+                ],
               )),
         ),
       ),

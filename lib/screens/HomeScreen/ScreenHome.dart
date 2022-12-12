@@ -79,7 +79,7 @@ class _ScreenHomeState extends State<ScreenHome>
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                Timer.periodic(const Duration(seconds: 30), (timer) {
+                // Timer.periodic(const Duration(minutes: 1), (timer) {
                   DateTime temptime = DateTime.now();
                   print('inside periodic');
                   print(DateTime(temptime.year, temptime.month, temptime.day,
@@ -90,25 +90,19 @@ class _ScreenHomeState extends State<ScreenHome>
                       notifiationTIme.day,
                       notifiationTIme.hour,
                       notifiationTIme.minute));
-                  if (DateTime(temptime.year, temptime.month, temptime.day,
-                          temptime.hour, temptime.minute) ==
-                      DateTime(
-                          notifiationTIme.year,
-                          notifiationTIme.month,
-                          notifiationTIme.day,
-                          notifiationTIme.hour,
-                          notifiationTIme.minute)) {
-                    // 8:18pm
-                    initialAwesome(
-                        globNotifiData!.description, globNotifiData!.location);
+                  // if (DateTime(temptime.year, temptime.month, temptime.day,
+                  //         temptime.hour, temptime.minute) ==
+                  //     DateTime(
+                  //         notifiationTIme.year,
+                  //         notifiationTIme.month,
+                  //         notifiationTIme.day,
+                  //         notifiationTIme.hour,
+                  //         notifiationTIme.minute)) {
+                    initialAwesome(globNotifiData!.description,
+                        globNotifiData!.location, context);
                     print('out periodic');
-                  }
-                });
-                // initialAwesome('Task reminder', 'Sinan kalyanam');
-                // notificationService.sendNotification('This is title','This is body');
-                // notificationService.scheduleNotification(
-                //     'scheduled', 'body of scheduled');
-                // notificationService.stopNotifications();
+                  // }
+                // });
               },
               icon: const Icon(Icons.volume_up_rounded)),
           IconButton(

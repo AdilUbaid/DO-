@@ -3,10 +3,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:project/db/model/dataModel.dart';
 import 'package:project/db/model/eventDataModel.dart';
 import 'package:project/function/taskSingle.dart';
-import 'package:project/function/themeColor.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:project/screens/ScreenSplash/screenSplash.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   List<DateTime> dateArray;
@@ -69,12 +68,12 @@ class MyApp extends StatelessWidget {
       // home: ScreenSplash(),
       home: ScreenSplash(),
 
-      localizationsDelegates: [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [Locale('en', 'US')], //, Locale('pt', 'BR')],
+      // localizationsDelegates: [
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      supportedLocales: [Locale('en', 'US')], 
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:project/db/model/eventDataModel.dart';
-
+import 'package:project/screens/CalendarScreen/widget/Calendar.dart';
 
 ValueNotifier<List<EventModel>> eventListNotifier = ValueNotifier([]);
+
 
 Future<void> addEvent(EventModel value) async {
   final eventDB = await Hive.openBox<EventModel>('event_db');
@@ -19,7 +20,7 @@ Future<void> getAllEvent() async {
   eventListNotifier.notifyListeners();
 }
 
-deleteEvent( index,context) async {
+deleteEvent(index, context) async {
   final eventDB = await Hive.openBox<EventModel>('event_db');
   final Map<dynamic, EventModel> taskMap = eventDB.toMap();
   dynamic desiredKey;
@@ -33,3 +34,15 @@ deleteEvent( index,context) async {
   Navigator.of(context).pop();
 }
 
+editEvent(index, context, EventModel value) async {
+  final eventDB = await Hive.openBox<EventModel>('event_db');
+  final Map<dynamic, EventModel> EventMap = eventDB.toMap();
+  dynamic desiredKey;
+  EventMap.forEach((key, value) {
+    if (value.id == index) {
+      desiredKey = key;
+    }
+  });
+  eventDB.put(desiredKey, value);
+  getAllEvent();
+}

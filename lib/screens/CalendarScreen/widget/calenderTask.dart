@@ -1,116 +1,203 @@
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:intl/intl.dart';
 import 'package:project/screens/CalendarScreen/widget/Calendar.dart';
-import 'package:project/screens/HomeScreen/widget/taskTab.dart';
-
-// import '../../../db/funtion/taskDbFunctions.dart';
 import '../../../db/model/dataModel.dart';
-// import '../../../main.dart';
+import '../../../db/model/eventDataModel.dart';
 import '../../../function/themeColor.dart';
-// import '../../HomeScreen/widget/taskEventContainer.dart';
-// import '../../HomeScreen/widget/taskTab.dart';
+import '../../SearchScreen/widget/searchView.dart';
 
-// import 'package:flutter/src/widgets/container.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// ValueNotifier<List<DateTime>> date = ValueNotifier([]);
+// List<TaskModel> taskInDay = [];
+ValueNotifier<DateTime> pickedDateNotifier = ValueNotifier(focusedDay);
 
 class CalenderTask extends StatefulWidget {
   const CalenderTask({super.key});
 
   @override
   State<CalenderTask> createState() => _CalenderTaskState();
+
+  // void tskEvntOfday() {}
 }
 
 class _CalenderTaskState extends State<CalenderTask> {
+  bool isExpandedk = true;
+  bool taskIndex = true;
+  bool eventIndex = true;
+
+  final List<TaskModel> allTaskSearchList =
+      Hive.box<TaskModel>('task_db').values.toList();
+
+  late List<TaskModel> displayTaskSearchList = [];
+  // List<TaskModel>.from(allTaskSearchList);
+
+  final List<EventModel> allEventSearchList =
+      Hive.box<EventModel>('event_db').values.toList();
+
+  late List<EventModel> displayEventSearchList = [];
+
+  // List<EventModel>.from(allEventSearchList);
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (ctx, index) {
-        taskInDay.clear();
-        taskOfDay(globTaskList);
-        // print("$index index");
-        final data = taskInDay[0];
-        // List<TaskModel> sortedDayList = [];
+    // tskEvntOfday();
+    return Expanded(
+        child: ValueListenableBuilder(
+            valueListenable: pickedDateNotifier,
+            builder: (BuildContext context, DateTime value, Widget? child) {
+              return ListView.builder(
+                
+                // physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int count) {
+                   tskEvntOfday();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Wrap(
+                      children: [
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: ExpansionPanelList(
+                                expandedHeaderPadding: EdgeInsets.all(0),
+                                elevation: 0,
+                                expansionCallback:
+                                    (int index, bool isExpanded) {
+                                  setState(() {
+                                    taskIndex = !(indexExpPanel(count));
+                                    // taskIndex = !eventIndex;
+                                  });
+                                },
+                                children: [
+                                  ExpansionPanel(
+                                      backgroundColor: cGreen,
+                                      headerBuilder: (BuildContext context,
+                                          bool isExpanded) {
+                                        // tskEvntOfday();
 
-        // final Box<TaskModel> taskBox;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //
-            Text(
-              data.description,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'comic',
-                  fontSize: 26,
-                  color: rBlack),
-              // ),
-
-              // ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(DateFormat('hh:mm a').format(data.date),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'comic',
-                              fontSize: 20,
-                              color: rBlack)),
-                      TextButton(
-                          onPressed: () {},
-                          child: Container(
-                            width: 65,
-                            // ignore: sort_child_properties_last
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 4),
-                              child: Text(
-                                'high',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'comic',
-                                    fontSize: 20,
-                                    color: rBlack),
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: cRed),
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-      itemCount: taskInDay.length,
-      // itemCount: 1,
-    );
+                                        return ListTile(
+                                          title: Center(
+                                            child: Text(
+                                              headingText(count),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'comic',
+                                                color: rBlack,
+                                                fontSize: 23,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      body: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(17),
+                                              color: cGreen),
+                                          child: Column(
+                                            children: [
+                                              (dbSelect(count).isNotEmpty)
+                                                  ? ListView.separated(
+                                                      itemCount: dbSelect(count)
+                                                          .length,
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        var data = dbSelect(
+                                                            count)[index];
+                                                        return SearchView(
+                                                          data: data,
+                                                          index: index,
+                                                        );
+                                                      },
+                                                      separatorBuilder:
+                                                          (ctx, index) {
+                                                        return const Divider();
+                                                      },
+                                                    )
+                                                  : Center(
+                                                      child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                          "The data is not Found",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'comic',
+                                                              color: rBlack,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 14)),
+                                                    )),
+                                            ],
+                                          )),
+                                      isExpanded: indexExpPanel(count))
+                                  // }).toList(),
+                                ]))
+                      ],
+                    ),
+                  );
+                },
+                itemCount: 2,
+              );
+            }));
   }
-}
 
-taskOfDay(List<TaskModel> list) {
-  // taskInDay.clear();
-  for (int i = 0; i < list.length; i++) {
-    DateTime tskDate = list[i].date;
-    if (DateTime(tskDate.year, tskDate.month, tskDate.day) ==
-        DateTime(focusedDay.year, focusedDay.month, focusedDay.day)) {
-      taskInDay.add(list[i]);
-      print("look ${taskInDay[0].date}");
+  void tskEvntOfday() {
+    displayTaskSearchList = allTaskSearchList
+        .where((element) =>
+            DateTime(element.date.year, element.date.month, element.date.day) ==
+            DateTime(focusedDay.year, focusedDay.month, focusedDay.day))
+        .toList();
+    displayEventSearchList = allEventSearchList
+        .where((element) =>
+            DateTime(element.date.year, element.date.month, element.date.day) ==
+            DateTime(focusedDay.year, focusedDay.month, focusedDay.day))
+        .toList();
+  }
+
+  List dbSelect(count) {
+    if (count == 0) {
+      print(allTaskSearchList[0].date);
+      print(focusedDay);
+      print('count $count');
+      print(displayEventSearchList.length);
+
+      return displayTaskSearchList;
+    } else {
+      print('count $count');
+      print(displayEventSearchList.length);
+      return displayEventSearchList;
+    }
+  }
+
+  bool indexExpPanel(int index) {
+    // bool taskIndex=;
+    if (index == 0) {
+      return taskIndex;
+    } else {
+      return eventIndex;
+    }
+  }
+
+  String headingText(int index) {
+    // bool taskIndex=;
+    if (index == 0) {
+      return 'Tasks';
+    } else {
+      return 'Events';
     }
   }
 }
 
-List<TaskModel> taskInDay = [];
+// taskOfDay(List<TaskModel> list) {
+//   // taskInDay.clear();
+//   for (int i = 0; i < list.length; i++) {
+//     DateTime tskDate = list[i].date;
+//     if (DateTime(tskDate.year, tskDate.month, tskDate.day) ==
+//         DateTime(focusedDay.year, focusedDay.month, focusedDay.day)) {
+//       taskInDay.add(list[i]);
+//       print("look ${taskInDay[0].date}");
+//     }
+//   }
+// }

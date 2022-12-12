@@ -43,20 +43,5 @@ editTask(index, context, TaskModel value) async {
   });
   taskDB.put(desiredKey, value);
   getAllTask();
-  Navigator.of(context).pop();
+ 
 }
-
-// UpdateTask(index, context, TaskModel value) async {
-//   final taskDB = await Hive.openBox<TaskModel>('task_db');
-//   final Map<dynamic, TaskModel> taskMap = taskDB.toMap();
-//   dynamic desiredKey;
-//   // value.isAlarm = true;
-//   taskMap.forEach((key, value) {
-//     if (value.id == index) {
-//       desiredKey = key;
-//     }
-//   });
-//   taskDB.put(desiredKey, value);
-//   getAllTask();
-//   Navigator.of(context).pop();
-// }

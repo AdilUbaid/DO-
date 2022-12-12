@@ -8,15 +8,14 @@ import 'complete_view.dart';
 
 List<EventModel> eventDonePrevious = [];
 
-
-class CmpltPrevious extends StatefulWidget {
-  const CmpltPrevious({super.key});
+class EvntCmpltPrevious extends StatefulWidget {
+  const EvntCmpltPrevious({super.key});
 
   @override
-  State<CmpltPrevious> createState() => _CmpltPreviousState();
+  State<EvntCmpltPrevious> createState() => _EvntCmpltPreviousState();
 }
 
-class _CmpltPreviousState extends State<CmpltPrevious> {
+class _EvntCmpltPreviousState extends State<EvntCmpltPrevious> {
   @override
   Widget build(BuildContext context) {
     eventDonePrevious =
@@ -42,26 +41,27 @@ class _CmpltPreviousState extends State<CmpltPrevious> {
                   return
                       // Text('hello world');
                       Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 10, bottom: 10),
-                          // child: GestureDetector(
-                          //   onTap: () {
-                          //     Navigator.of(context).push(MaterialPageRoute(
-                          //         builder: (context) => TaskView()));
-                          //   },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(17),
-                                  color: cGreen),
-                              child: CompleteView(data: data,),
-                              ),
-                            // ),
-                          );
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 10),
+                    // child: GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.of(context).push(MaterialPageRoute(
+                    //         builder: (context) => TaskView()));
+                    //   },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          color: cGreen),
+                      child: CompleteView(
+                        data: data,
+                        mode: 'EE',
+                      ),
+                    ),
+                    // ),
+                  );
                 });
           })
     ]);
   }
-
-  
 }
 // }

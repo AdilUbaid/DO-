@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
+import 'package:project/screens/previous/widget/event_complt_prev.dart';
+import 'package:project/screens/previous/widget/event_pending_prev.dart';
 
 import '../../function/themeColor.dart';
 import 'widget/CmpltPrevious.dart';
 import 'widget/pendingPrevious.dart';
 
 class PreviousScreen extends StatefulWidget {
-  PreviousScreen({super.key});
+  var homeIndex;
+
+  PreviousScreen({super.key, required this.homeIndex});
 
   @override
   State<PreviousScreen> createState() => _PreviousScreenState();
@@ -81,10 +84,27 @@ class _PreviousScreenState extends State<PreviousScreen>
             ),
             Expanded(
               // ignore: prefer_const_literals_to_create_immutables
-              child: TabBarView(controller: controller, children: [
-                const PendingPrevious(),
-                const CmpltPrevious(),
-              ]),
+              child: (widget.homeIndex == 0)
+                  ? TabBarView(controller: controller, children: [
+                      PendingPrevious(
+                        homeIndex: widget.homeIndex,
+                      ),
+                      const CmpltPrevious(),
+
+                      //  EvntPendingPrevious (),
+                      //  EvntCmpltPrevious()
+                    ])
+                  :
+                  // ignore: prefer_const_literals_to_create_immutables
+                  TabBarView(controller: controller, children: [
+                      //  PendingPrevious(),
+                      //  CmpltPrevious():
+
+                      EvntPendingPrevious(
+                        homeIndex: widget.homeIndex,
+                      ),
+                      const EvntCmpltPrevious()
+                    ]),
             ),
           ],
         ),

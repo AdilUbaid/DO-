@@ -4,7 +4,6 @@ import '../../../db/funtion/taskDbFunctions.dart';
 import '../../../db/model/dataModel.dart';
 import '../../../function/themeColor.dart';
 import '../../HomeScreen/widget/taskTab.dart';
-import '../../taskView/TaskView.dart';
 import 'complete_view.dart';
 
 List<TaskModel> donePrevious = [];

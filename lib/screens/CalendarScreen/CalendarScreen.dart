@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
+import 'package:project/screens/CalendarScreen/widget/calenderTask.dart';
 import '../SearchScreen/SearchHome.dart';
 import 'widget/Calendar.dart';
-import 'widget/calendarEveTsk.dart';
 import '../../../function/themeColor.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -31,17 +30,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 icon: const Icon(Icons.search)),
           ],
         ),
-        body: ListView(
-          children: [Calendar(), CalendarEveTask()],
+        body: Column(
+          // children: [Calendar(), CalendarEveTask()],
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Calendar(),
+            // ignore: prefer_const_constructors
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: const CalenderTask(),
+            ),
+          ],
         ));
   }
 }
 
-Future<void> pickDate(context) async {
-  DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), //get today's date
-      firstDate: DateTime(
-          2000), //DateTime.now() - not to allow to choose before today.
-      lastDate: DateTime(2101));
-}
+// Future<void> pickDate(context) async {
+//   DateTime? pickedDate = await showDatePicker(
+//       context: context,
+//       initialDate: DateTime.now(), //get today's date
+//       firstDate: DateTime(
+//           2000), //DateTime.now() - not to allow to choose before today.
+//       lastDate: DateTime(2101));
+// }

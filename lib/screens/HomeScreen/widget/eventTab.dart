@@ -22,27 +22,27 @@ class EventTab extends StatefulWidget {
 class _EventTabState extends State<EventTab> {
   @override
   Widget build(BuildContext context) {
-return Stack(
+    return Stack(
       children: [
         ValueListenableBuilder(
             valueListenable: eventListNotifier,
             builder: (
               BuildContext ctx,
-              List<EventModel> taskList,
+              List<EventModel> eventList,
               Widget? child,
             ) {
               List<DateTime> dateArrayFinal = [];
-              dateArrayFinal = dateSaver(taskList.length, taskList);
-              globEventList = List<EventModel>.from(taskList);
+              dateArrayFinal = dateSaver(eventList.length, eventList);
+              globEventList = List<EventModel>.from(eventList);
               print("this is the time event $notifiationTImeEvent");
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  final data = taskList[index];
+                  final data = eventList[index];
                   List<EventModel> sortedDayList = [];
-                  sortListByDate(taskList.length, taskList);
-                  notifiationTImeEvent = pastEventArray[0].date;
-                  globNotifiDataEvent = pastEventArray[0];
-                  sortedDayList = taskList
+                  sortListByDate(eventList.length, eventList);
+                  notifiationTImeEvent = futureEventArray[0].date;
+                  globNotifiDataEvent = futureEventArray[0];
+                  sortedDayList = eventList
                       .where((e) =>
                           (DateTime(e.date.year, e.date.month, e.date.day) ==
                               dateArrayFinal[index]) &&
@@ -51,14 +51,14 @@ return Stack(
                   sortedDayList.sort(
                       (EventModel a, EventModel b) => a.date.compareTo(b.date));
 
-                  final Box<EventModel> taskBox;
+                  final Box<EventModel> eventBox;
                   return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemBuilder: (ctx, index2) {
                         final data = sortedDayList[index2];
-                        final Box<EventModel> taskBox;
+                        final Box<EventModel> eventBox;
                         return TaskEventContainer(
                           homeIndex: widget.homeIndex,
                           data: data,
@@ -74,35 +74,6 @@ return Stack(
             }),
       ],
     );
-
-
-
-    // return Stack(
-    //   children: [
-    //     ValueListenableBuilder(
-    //         valueListenable: eventListNotifier,
-    //         builder: (
-    //           BuildContext ctx,
-    //           List<EventModel> eventList,
-    //           Widget? child,
-    //         ) {
-    //           return ListView.builder(
-    //               itemBuilder: (ctx, index) {
-    //                 print("$index index @ event");
-    //                 final data = eventList[index];
-
-    //                 final Box<EventModel> taskBox;
-    //                 return TaskEventContainer(
-    //                   homeIndex: widget.homeIndex,
-    //                   data: data,
-    //                   index: index,
-    //                 );
-    //               },
-    //               itemCount: eventList.length);
-    //         }),
-    //   ],
-    // );
-    //
   }
 
   List<DateTime> dateSaver(int length, List<EventModel> list) {
@@ -114,8 +85,7 @@ return Stack(
 
     dateArray = dateArray.toSet().toList();
     dateArray.sort((DateTime a, DateTime b) => a.compareTo(b));
-    for (int i = 0; i < dateArray.length; i++) {
-    }
+    for (int i = 0; i < dateArray.length; i++) {}
     return dateArray;
   }
 
@@ -124,14 +94,14 @@ return Stack(
     for (int i = 0; i < length; i++) {
       if (list[i].date.isAfter(DateTime.now())) {
         futureEventArray.add(list[i]);
-        
       } else if (list[i].date.isBefore(DateTime.now())) {
         pastEventArray.add(list[i]);
-        
       }
     }
     futureEventArray
         .sort((EventModel a, EventModel b) => a.date.compareTo(b.date));
-    pastEventArray.sort((EventModel b, EventModel a) => a.date.compareTo(b.date));
+    pastEventArray
+        .sort((EventModel b, EventModel a) => a.date.compareTo(b.date));
+    print("length of pastevent ${pastEventArray.length}");
   }
 }

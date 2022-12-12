@@ -1,20 +1,19 @@
-// import 'dart:io';
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../function/themeColor.dart';
 
-late String imgeGlob = 'x';
+String imgeGlob = 'x';
 
 class EventImage extends StatefulWidget {
-  EventImage({
-    super.key,
-    // required this.imageStatic,
-  });
+  var data;
+  var mode;
+
+  EventImage({super.key, required this.data, required this.mode
+      // required this.imageStatic,
+      });
   // const imageStatic;
 
   @override
@@ -90,9 +89,12 @@ class _EventImageState extends State<EventImage> {
   }
 
   imageProvide() {
-    if (imgeGlob == 'x') {
+    if (imgeGlob == 'x' && (widget.data == null || widget.mode == 'ET')) {
       return const AssetImage('assets/image/wood-blog-placeholder.jpg')
           as ImageProvider;
+    } else if (imgeGlob == 'x') {
+      imgeGlob = widget.data.imagePath;
+      return FileImage(File(widget.data.imagePath));
     } else {
       return FileImage(File(imgeGlob));
     }

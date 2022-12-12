@@ -8,7 +8,9 @@ import '../../../function/themeColor.dart';
 import 'package:project/screens/HomeScreen/widget/taskTab.dart';
 
 class PendingPrevious extends StatefulWidget {
-  const PendingPrevious({super.key});
+  var homeIndex;
+
+   PendingPrevious({super.key,required this.homeIndex});
 
   @override
   State<PendingPrevious> createState() => _PendingPreviousState();
@@ -50,6 +52,7 @@ class _PendingPreviousState extends State<PendingPrevious> {
                           color: cGreen),
                       child: PendingView(
                         data: data,
+                        homeIndex: widget.homeIndex,
                       ),
                     ),
                   );

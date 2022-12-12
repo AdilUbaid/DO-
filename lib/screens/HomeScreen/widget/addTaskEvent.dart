@@ -5,11 +5,10 @@ import 'package:project/db/funtion/eventDbFunctions.dart';
 import 'package:project/db/funtion/taskDbFunctions.dart';
 import 'package:project/db/model/dataModel.dart';
 import 'package:project/db/model/eventDataModel.dart';
-import 'package:project/main.dart';
+
 import '../../../function/themeColor.dart';
 
 import 'EventImage.dart';
-import 'datePickerd.dart';
 import 'newDate.dart';
 
 bool _priority = false;
@@ -18,12 +17,12 @@ DateTime tempDate = DateTime.now();
 TimeOfDay tempTime = TimeOfDay.now();
 
 class AddTaskEvent extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var data;
-
-  AddTaskEvent({super.key, this.homeIndex = 0, this.mode = 'AT', this.data});
-
+  // ignore: prefer_typing_uninitialized_variables
   var homeIndex;
   String mode;
+  AddTaskEvent({super.key, this.homeIndex = 0, this.mode = 'AT', this.data});
 
   @override
   State<AddTaskEvent> createState() => _AddTaskEventState();
@@ -31,25 +30,20 @@ class AddTaskEvent extends StatefulWidget {
 
 class _AddTaskEventState extends State<AddTaskEvent> {
   TextEditingController descriptionController = TextEditingController();
-
   TextEditingController locationController = TextEditingController();
-  static const imageStatic = 'x';
 
-//   @override
   @override
   Widget build(BuildContext context) {
-    if (widget.mode == 'ET') {
-      descriptionController.text = widget.data.description;
-      locationController.text = widget.data.location;
-      timeController.text =
-          DateFormat('dd MMM yyy hh:mm a').format(widget.data.date);
+    descriptionController.text = widget.data.description;
+    locationController.text = widget.data.location;
+    timeController.text =
+        DateFormat('dd MMM yyy hh:mm a').format(widget.data.date);
+    if (widget.data != null) {
+      tempDate = widget.data.date;
     }
+    
     final taskDB = Hive.openBox<TaskModel>('task_db');
 
-    // String time;
-
-    // String TER = 'Add Task';
-    // bool priority;
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -92,8 +86,11 @@ class _AddTaskEventState extends State<AddTaskEvent> {
                       },
                       child: Container(
                         width: 65,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: cGreen),
                         child: Padding(
-                          padding: EdgeInsets.only(bottom: 4),
+                          padding: const EdgeInsets.only(bottom: 4),
                           child: Text(
                             'save',
                             textAlign: TextAlign.center,
@@ -104,14 +101,12 @@ class _AddTaskEventState extends State<AddTaskEvent> {
                                 color: rBlack),
                           ),
                         ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: cGreen),
                       ))
                 ],
               ),
               Offstage(
-                  offstage: hideImg(widget.homeIndex), child: EventImage()),
+                  offstage: hideImg(widget.homeIndex),
+                  child: EventImage(data: widget.data,mode: widget.mode,)),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 15, bottom: 7, left: 10, right: 10),
@@ -276,7 +271,7 @@ class _AddTaskEventState extends State<AddTaskEvent> {
       taskAdd(widget.mode);
     } else if (homeIndex == 1) {
       print("INdex at event  2");
-      eventAdd();
+      eventAdd(widget.mode);
     }
   }
 
@@ -301,13 +296,14 @@ class _AddTaskEventState extends State<AddTaskEvent> {
     if (mode == 'AT') {
       addTask(_task);
     } else if (mode == 'ET') {
-      editTask(widget.data.id,context, _task);
+      editTask(widget.data.id, context, _task);
+      Navigator.of(context).pop();
     }
     // print(_task.date);
-    print('$_id look time');
+    // print('$_id look time');
   }
 
-  void eventAdd() async {
+  void eventAdd(mode) async {
     final _imagePath = imgeGlob;
     final _id = DateTime.now().toString();
     final _description = descriptionController.text.trim();
@@ -326,9 +322,16 @@ class _AddTaskEventState extends State<AddTaskEvent> {
         isAlarm: _alarm,
         imagePath: _imagePath,
         date: _date);
-    addEvent(_event);
-    print('$_date look date');
-    print('$_time  look time');
+
+    if (mode == 'AE') {
+      addEvent(_event);
+    } else if (mode == 'EE') {
+      editEvent(widget.data.id, context, _event);
+      Navigator.of(context).pop();
+    }
+
+    // print('$_date look date');
+    // print('$_time  look time');
     // print("aluva");
   }
 }
