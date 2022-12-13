@@ -100,7 +100,8 @@ class _EventImageState extends State<EventImage> {
     } else if (widget.mode == "EE" && widget.data == null) {
       // imgeGlob = widget.data.imagePath;
       return FileImage(File(imgeGlob));
-    } else if (widget.mode != "AE" && imgeGlob == 'x') {
+    // } else if ((widget.mode != "AE"&&widget.mode != "AT"||widget.mode != "ET") && imgeGlob == 'x') {
+       } else if(widget.mode == "EE"&& imgeGlob == 'x'){
       imgeGlob = widget.data.imagePath;
       return FileImage(File(imgeGlob));
     } else if (widget.mode == "EE" && imgeGlob != widget.data.imagePath) {
