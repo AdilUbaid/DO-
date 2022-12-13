@@ -1,13 +1,9 @@
-// import 'dart:html';
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:project/screens/NavigationDrawer/navigationDrawer.dart';
 import 'package:project/screens/Notification/notification.dart';
 import 'package:project/screens/SearchScreen/SearchHome.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:awesome_notifications/awesome_notifications.dart';
 
 import '../../function/themeColor.dart';
 import 'widget/bottomNav.dart';
@@ -31,7 +27,6 @@ class ScreenHome extends StatefulWidget {
 class _ScreenHomeState extends State<ScreenHome>
     with SingleTickerProviderStateMixin {
   late TabController controller;
-  // NotificationService notificationService = NotificationService();
 
   @override
   void initState() {
@@ -41,7 +36,6 @@ class _ScreenHomeState extends State<ScreenHome>
     controller.addListener(() {
       setState(() {});
     });
-    // notificationService.initialiseNotifications();
   }
 
   @override
@@ -52,6 +46,32 @@ class _ScreenHomeState extends State<ScreenHome>
 
   @override
   Widget build(BuildContext context) {
+Timer.periodic(const Duration(minutes: 1), (timer) {
+                  DateTime temptime = DateTime.now();
+                  // print('inside periodic');
+                  // print(DateTime(temptime.year, temptime.month, temptime.day,
+                  //     temptime.hour, temptime.minute));
+                  // print(DateTime(
+                  //     notifiationTIme.year,
+                  //     notifiationTIme.month,
+                  //     notifiationTIme.day,
+                  //     notifiationTIme.hour,
+                  //     notifiationTIme.minute));
+                  if (DateTime(temptime.year, temptime.month, temptime.day,
+                          temptime.hour, temptime.minute) ==
+                      DateTime(
+                          notifiationTIme.year,
+                          notifiationTIme.month,
+                          notifiationTIme.day,
+                          notifiationTIme.hour,
+                          notifiationTIme.minute)) {
+                    initialAwesome(globNotifiData!.description,
+                        globNotifiData!.location, context);
+                    print('out periodic');
+                  }
+                });
+
+
     return Scaffold(
       drawer: NavigationDrawer(),
       backgroundColor: cBlack,
@@ -77,34 +97,6 @@ class _ScreenHomeState extends State<ScreenHome>
           );
         }),
         actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                // Timer.periodic(const Duration(minutes: 1), (timer) {
-                  DateTime temptime = DateTime.now();
-                  print('inside periodic');
-                  print(DateTime(temptime.year, temptime.month, temptime.day,
-                      temptime.hour, temptime.minute));
-                  print(DateTime(
-                      notifiationTIme.year,
-                      notifiationTIme.month,
-                      notifiationTIme.day,
-                      notifiationTIme.hour,
-                      notifiationTIme.minute));
-                  // if (DateTime(temptime.year, temptime.month, temptime.day,
-                  //         temptime.hour, temptime.minute) ==
-                  //     DateTime(
-                  //         notifiationTIme.year,
-                  //         notifiationTIme.month,
-                  //         notifiationTIme.day,
-                  //         notifiationTIme.hour,
-                  //         notifiationTIme.minute)) {
-                    initialAwesome(globNotifiData!.description,
-                        globNotifiData!.location, context);
-                    print('out periodic');
-                  // }
-                // });
-              },
-              icon: const Icon(Icons.volume_up_rounded)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(

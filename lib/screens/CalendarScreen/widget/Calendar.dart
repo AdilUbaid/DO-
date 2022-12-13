@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:project/screens/CalendarScreen/CalendarScreen.dart';
-import 'package:project/screens/HomeScreen/widget/taskTab.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../function/themeColor.dart';
@@ -37,23 +35,18 @@ class _CalendarState extends State<Calendar> {
                 setState(() {
                   selectedDay = selectDay;
                   focusedDay = focusDay;
-                  CalenderTask();
-                  // CalenderTask().tskEvntOfday();
-                  // Navigator.push(
-                  // context,
-                  // MaterialPageRoute(
-                  // builder: (context) => CalendarScreen(),
-                  // ));
-                  print('look for focus day $focusDay');
+                 
+                  pickedDateNotifier.value = focusDay;
+                  // print('look for focus day $focusDay');
+                  // print("look for notifier${pickedDateNotifier}");
                   // taskOfDay(globTaskList);
                 });
                 // taskOfDay();
               },
               calendarStyle: (CalendarStyle(isTodayHighlighted: true)),
               selectedDayPredicate: (DateTime date) {
-                print("this is focus day $focusedDay");
-                // taskOfDay(globTaskList);
-                // CalenderTask();
+                // print("this is focus day $focusedDay");
+                
                 return isSameDay(selectedDay, date);
               },
             ),

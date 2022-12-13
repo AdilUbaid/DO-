@@ -45,7 +45,10 @@ class _SearchHomeState extends State<SearchHome> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              SearchBar(function: searchTaskList),
+              SearchBar(
+                // function: searchTaskList,
+                function: rangeSearch,
+              ),
               Wrap(
                 runSpacing: 5.0,
                 spacing: 5.0,
@@ -53,18 +56,20 @@ class _SearchHomeState extends State<SearchHome> {
                   chips(
                     title: 'high',
                     actionKey: 'H',
-                    //
-                    function: searchTaskList,
+                    function: rangeSearch,
+                    // function: searchTaskList,
                   ),
                   chips(
                     title: 'low',
                     actionKey: 'L',
-                    function: searchTaskList,
+                    // function: searchTaskList,
+                    function: rangeSearch,
                   ),
                   chips(
                     title: 'this week',
                     actionKey: 'T',
-                    function: searchTaskList,
+                    // function: searchTaskList,
+                    function: rangeSearch,
                   ),
                   // DateRange(
                   //   actionKey: 'R',
@@ -80,7 +85,11 @@ class _SearchHomeState extends State<SearchHome> {
                           color: Colors.grey),
                       child: TextButton(
                           onPressed: () {
-                            picRange(context, searchTaskList);
+                            // picRange(context, searchTaskList);
+                            picRange(
+                              context,
+                              rangeSearch,
+                            );
                           },
                           child: Text(
                             'Date',
@@ -101,85 +110,83 @@ class _SearchHomeState extends State<SearchHome> {
                     child: Wrap(
                       children: [
                         ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: ExpansionPanelList(
-                                expandedHeaderPadding: EdgeInsets.all(0),
-                                elevation: 0,
-                                expansionCallback:
-                                    (int index, bool isExpanded) {
-                                  setState(() {
-                                    taskIndex = !(indexExpPanel(count));
-                                    // taskIndex = !eventIndex;
-                                  });
-                                },
-                                children: [
-                                  ExpansionPanel(
-                                      backgroundColor: cGreen,
-                                      headerBuilder: (BuildContext context,
-                                          bool isExpanded) {
-                                        return ListTile(
-                                          title: Center(
-                                            child: Text(
-                                              headingText(count),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'comic',
-                                                color: rBlack,
-                                                fontSize: 23,
-                                              ),
-                                            ),
+                          borderRadius: BorderRadius.circular(8),
+                          child: ExpansionPanelList(
+                            expandedHeaderPadding: EdgeInsets.all(0),
+                            elevation: 0,
+                            expansionCallback: (int index, bool isExpanded) {
+                              setState(() {
+                                taskIndex = !(indexExpPanel(count));
+                                // taskIndex = !eventIndex;
+                              });
+                            },
+                            children: [
+                              ExpansionPanel(
+                                  backgroundColor: cGreen,
+                                  headerBuilder:
+                                      (BuildContext context, bool isExpanded) {
+                                    return ListTile(
+                                      title: Center(
+                                        child: Text(
+                                          headingText(count),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'comic',
+                                            color: rBlack,
+                                            fontSize: 23,
                                           ),
-                                        );
-                                      },
-                                      body: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(17),
-                                              color: cGreen),
-                                          child: Column(
-                                            children: [
-                                              (dbSelect(count).isNotEmpty)
-                                                  ? ListView.separated(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        var data = dbSelect(
-                                                            count)[index];
-                                                        return SearchView(
-                                                          data: data,
-                                                          index: index,
-                                                        );
-                                                      },
-                                                      separatorBuilder:
-                                                          (ctx, index) {
-                                                        return const Divider();
-                                                      },
-                                                      itemCount: dbSelect(count)
-                                                          .length,
-                                                    )
-                                                  : Center(
-                                                      child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                          "The data is not Found",
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'comic',
-                                                              color: rBlack,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
-                                                    )),
-                                            ],
-                                          )),
-                                      isExpanded: indexExpPanel(count))
-                                  // }).toList(),
-                                ]))
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  body: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(17),
+                                          color: cGreen),
+                                      child: Column(
+                                        children: [
+                                          (dbSelect(count).isNotEmpty)
+                                              ? ListView.separated(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var data =
+                                                        dbSelect(count)[index];
+                                                    return SearchView(
+                                                      data: data,
+                                                      index: index,
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (ctx, index) {
+                                                    return const Divider();
+                                                  },
+                                                  itemCount:
+                                                      dbSelect(count).length,
+                                                )
+                                              : Center(
+                                                  child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      "The data is not Found",
+                                                      style: TextStyle(
+                                                          fontFamily: 'comic',
+                                                          color: rBlack,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14)),
+                                                )),
+                                        ],
+                                      )),
+                                  isExpanded: indexExpPanel(count))
+                              // }).toList(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -193,32 +200,76 @@ class _SearchHomeState extends State<SearchHome> {
     );
   }
 
+  void rangeSearch(String value, [String action = 'X', String range = 'X']) {
+    setState(() {
+      switch (range) {
+        case 'T':
+          DateTime tempDateSwitch = DateTime.now();
+          displayTaskSearchList = allTaskSearchList
+              .where((element) =>
+                  element.date.isAfter(DateTime.now()) &&
+                  element.date.isBefore(DateTime(tempDateSwitch.year,
+                      tempDateSwitch.month, (tempDateSwitch.day + 7))))
+              .toList();
+
+          displayEventSearchList = allEventSearchList
+              .where((element) =>
+                  element.date.isAfter(DateTime.now()) &&
+                  element.date.isBefore(DateTime(tempDateSwitch.year,
+                      tempDateSwitch.month, (tempDateSwitch.day + 7))))
+              .toList();
+          searchTaskList(value, action);
+          break;
+        case 'R':
+          displayTaskSearchList = allTaskSearchList
+              .where((element) =>
+                  element.date.isAfter(DateTime(dateRange.start.year,
+                      dateRange.start.month, dateRange.start.day)) &&
+                  element.date.isBefore(DateTime(dateRange.end.year,
+                      dateRange.end.month, dateRange.end.day + 1)))
+              .toList();
+
+          displayEventSearchList = allEventSearchList
+              .where((element) =>
+                  element.date.isAfter(DateTime(dateRange.start.year,
+                      dateRange.start.month, dateRange.start.day)) &&
+                  element.date.isBefore(DateTime(dateRange.end.year,
+                      dateRange.end.month, dateRange.end.day + 1)))
+              .toList();
+          searchTaskList(value, action);
+          break;
+        default:
+          searchTaskList(value, action);
+          break;
+      }
+    });
+  }
+
   void searchTaskList(String value, [String action = 'X']) {
     globAction = action;
     setState(
       () {
         switch (action) {
           case 'H':
-            displayTaskSearchList = allTaskSearchList
+            displayTaskSearchList = displayTaskSearchList
                 .where((element) => element.priority == true)
                 .toList();
 
-            displayEventSearchList = allEventSearchList
+            displayEventSearchList = displayEventSearchList
                 .where((element) => element.priority == true)
                 .toList();
             break;
           case 'L':
-            displayTaskSearchList = allTaskSearchList
+            displayTaskSearchList = displayTaskSearchList
                 .where((element) => element.priority == false)
                 .toList();
 
-            displayEventSearchList = allEventSearchList
+            displayEventSearchList = displayEventSearchList
                 .where((element) => element.priority == false)
                 .toList();
             break;
           case 'T':
             DateTime tempDateSwitch = DateTime.now();
-            // print("the 7+ date ${DateTime( tempDateSwitch.year,tempDateSwitch.month,(tempDateSwitch.day+8))}");
             displayTaskSearchList = allTaskSearchList
                 .where((element) =>
                     element.date.isAfter(DateTime.now()) &&
@@ -234,14 +285,12 @@ class _SearchHomeState extends State<SearchHome> {
                 .toList();
             break;
           case 'R':
-            // DateTime tempDateSwitch = DateTime.now();
-            // print("the 7+ date ${DateTime( tempDateSwitch.year,tempDateSwitch.month,(tempDateSwitch.day+8))}");
             displayTaskSearchList = allTaskSearchList
                 .where((element) =>
                     element.date.isAfter(DateTime(dateRange.start.year,
                         dateRange.start.month, dateRange.start.day)) &&
                     element.date.isBefore(DateTime(dateRange.end.year,
-                        dateRange.end.month, dateRange.end.day+1)))
+                        dateRange.end.month, dateRange.end.day + 1)))
                 .toList();
 
             displayEventSearchList = allEventSearchList

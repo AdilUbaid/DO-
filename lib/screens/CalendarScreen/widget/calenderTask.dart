@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:project/screens/CalendarScreen/widget/Calendar.dart';
+import '../../../db/funtion/taskDbFunctions.dart';
 import '../../../db/model/dataModel.dart';
 import '../../../db/model/eventDataModel.dart';
 import '../../../function/themeColor.dart';
 import '../../SearchScreen/widget/searchView.dart';
 
-// List<TaskModel> taskInDay = [];
-ValueNotifier<DateTime> pickedDateNotifier = ValueNotifier(focusedDay);
+// List<TaskModel> taskInDay = []; 
+DateTime newddate = DateTime.now();
+ValueNotifier<DateTime> pickedDateNotifier = ValueNotifier(DateTime.now());
+
 
 class CalenderTask extends StatefulWidget {
   const CalenderTask({super.key});
@@ -38,16 +41,16 @@ class _CalenderTaskState extends State<CalenderTask> {
   @override
   Widget build(BuildContext context) {
     // tskEvntOfday();
+
     return Expanded(
         child: ValueListenableBuilder(
             valueListenable: pickedDateNotifier,
             builder: (BuildContext context, DateTime value, Widget? child) {
               return ListView.builder(
-                
                 // physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int count) {
-                   tskEvntOfday();
+                  tskEvntOfday();
                   return Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Wrap(
@@ -154,6 +157,7 @@ class _CalenderTaskState extends State<CalenderTask> {
             DateTime(element.date.year, element.date.month, element.date.day) ==
             DateTime(focusedDay.year, focusedDay.month, focusedDay.day))
         .toList();
+    
   }
 
   List dbSelect(count) {

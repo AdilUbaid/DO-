@@ -22,7 +22,7 @@ class AddTaskEvent extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var homeIndex;
   String mode;
-  AddTaskEvent({super.key, this.homeIndex = 0, this.mode = 'AT', this.data});
+  AddTaskEvent({super.key, this.homeIndex = 0, required this.mode, this.data});
 
   @override
   State<AddTaskEvent> createState() => _AddTaskEventState();
@@ -34,15 +34,20 @@ class _AddTaskEventState extends State<AddTaskEvent> {
 
   @override
   Widget build(BuildContext context) {
-    descriptionController.text = widget.data.description;
-    locationController.text = widget.data.location;
-    timeController.text =
-        DateFormat('dd MMM yyy hh:mm a').format(widget.data.date);
-    if (widget.data != null) {
-      tempDate = widget.data.date;
+    print("this is mode ${widget.mode}");
+    // (widget.homeIndex == 1) ? widget.mode == 'AE' : widget.mode == 'AT';
+    if (widget.mode == 'ET' || widget.mode == 'EE') {
+      descriptionController.text = widget.data.description;
+      locationController.text = widget.data.location;
+      timeController.text =
+          DateFormat('dd MMM yyy hh:mm a').format(widget.data.date);
+      if (widget.data != null) {
+        tempDate = widget.data.date;
+      }
     }
-    
+
     final taskDB = Hive.openBox<TaskModel>('task_db');
+    final eventDB = Hive.openBox<EventModel>('event_db');
 
     return Padding(
       padding:
@@ -106,7 +111,10 @@ class _AddTaskEventState extends State<AddTaskEvent> {
               ),
               Offstage(
                   offstage: hideImg(widget.homeIndex),
-                  child: EventImage(data: widget.data,mode: widget.mode,)),
+                  child: EventImage(
+                    data: widget.data,
+                    mode: widget.mode,
+                  )),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 15, bottom: 7, left: 10, right: 10),
@@ -322,6 +330,12 @@ class _AddTaskEventState extends State<AddTaskEvent> {
         isAlarm: _alarm,
         imagePath: _imagePath,
         date: _date);
+    print("image glob is x");
+    imgFlag = false;
+    setState(() {
+      imgeGlob = 'x';
+      imgFlag = false;
+    });
 
     if (mode == 'AE') {
       addEvent(_event);

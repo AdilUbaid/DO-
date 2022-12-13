@@ -18,5 +18,5 @@ Future picRange(BuildContext context, Function function) async {
   print(
       "${newDateRange.end.year} / ${newDateRange.end.month} / ${newDateRange.end.day}");
   dateRange = newDateRange;
-  function(globSearchKey, globAction = 'R');
+  function(globSearchKey, globAction = 'R','R');
 }

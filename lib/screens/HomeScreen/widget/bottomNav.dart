@@ -5,7 +5,7 @@ import 'addTaskEvent.dart';
 import '../../../function/themeColor.dart';
 
 class BottomNav extends StatelessWidget {
-  BottomNav({super.key, required this.homeIndex });
+  BottomNav({super.key, required this.homeIndex});
 
   var homeIndex;
 
@@ -26,7 +26,9 @@ class BottomNav extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4, bottom: 4, left: 38),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PreviousScreen(homeIndex: homeIndex,))),
+                      builder: (context) => PreviousScreen(
+                            homeIndex: homeIndex,
+                          ))),
                   child: Column(
                     children: [
                       Icon(
@@ -89,6 +91,8 @@ class BottomNav extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AddTaskEvent(
                     homeIndex: homeIndex,
+                    mode: (homeIndex == 1) ? 'AE' : 'AT',
+                    // mode:,
                   );
                 },
               );

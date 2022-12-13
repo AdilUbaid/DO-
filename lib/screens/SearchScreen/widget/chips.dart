@@ -6,16 +6,15 @@ import '../../../main.dart';
 
 class chips extends StatefulWidget {
   String title;
-
   String actionKey;
-
   Function function;
+  var range;
 
   chips(
       {super.key,
       required this.title,
       required this.actionKey,
-      required this.function});
+      required this.function,this.range});
 
   @override
   State<chips> createState() => _chipsState();
@@ -41,7 +40,7 @@ class _chipsState extends State<chips> {
             onSelected: (newState) {
               // widget.function('tsk', widget.actionKey);
               if (!isSelected)
-                widget.function(globSearchKey, globAction = widget.actionKey);
+                widget.function(globSearchKey, globAction = widget.actionKey,widget.actionKey);
               else
                 widget.function(
                   globSearchKey,

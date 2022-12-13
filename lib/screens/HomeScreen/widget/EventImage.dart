@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../function/themeColor.dart';
 
 String imgeGlob = 'x';
+bool imgFlag = false;
 
 class EventImage extends StatefulWidget {
   var data;
@@ -58,6 +59,7 @@ class _EventImageState extends State<EventImage> {
                 onPressed: () async {
                   // imgPath = await pickImage();
                   imgeGlob = await pickImage();
+                  imgFlag = true;
                 },
                 child: Icon(
                   Icons.add_a_photo,
@@ -82,6 +84,7 @@ class _EventImageState extends State<EventImage> {
     } else {
       setState(() {
         imgeGlob = pickedimage.path;
+        // pickedimage.path = 'x';
       });
       print(pickedimage.path);
       return pickedimage.path;
@@ -89,12 +92,20 @@ class _EventImageState extends State<EventImage> {
   }
 
   imageProvide() {
-    if (imgeGlob == 'x' && (widget.data == null || widget.mode == 'ET')) {
+    print("THis is glob $imgeGlob");
+
+    if (imgFlag == false && widget.mode == "AE") {
       return const AssetImage('assets/image/wood-blog-placeholder.jpg')
           as ImageProvider;
-    } else if (imgeGlob == 'x') {
+    } else if (widget.mode == "EE" && widget.data == null) {
+      // imgeGlob = widget.data.imagePath;
+      return FileImage(File(imgeGlob));
+    } else if (widget.mode != "AE" && imgeGlob == 'x') {
       imgeGlob = widget.data.imagePath;
-      return FileImage(File(widget.data.imagePath));
+      return FileImage(File(imgeGlob));
+    } else if (widget.mode == "EE" && imgeGlob != widget.data.imagePath) {
+      // imgeGlob = widget.data.imagePath;
+      return FileImage(File(imgeGlob));
     } else {
       return FileImage(File(imgeGlob));
     }

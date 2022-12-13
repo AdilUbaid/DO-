@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
 
 import '../../taskView/TaskView.dart';
-import 'calenderEvent.dart';
 import '../../../function/themeColor.dart';
 import 'calenderTask.dart';
 
